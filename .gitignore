@@ -1,5 +1,13 @@
+.idea/
+
 ### VS Code ###
 .vscode/
+.env
+*.env.local
+node_module/
+vendor/
+dist/
+build/
 
 /target/
 *.iml

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -37,6 +38,9 @@ public class ContribuyenteRestController {
 		return contribuyenteService.findAll();
 	}
 	
+	
+	
+	
 	@PostMapping("/crear/contribuyente")
 	public ResponseEntity<?>  crearContribuyente(@Valid @RequestBody Contribuyente contribuyente ,  BindingResult resultadosDeValidacion){
 		Contribuyente  nuevoContribuyente  = null;
@@ -64,12 +68,12 @@ public class ContribuyenteRestController {
 		return new  ResponseEntity<Map<String,Object>>(response,HttpStatus.ACCEPTED);
 	};
 	
-	@PutMapping("/actualizar/contribuyente")
+	@PutMapping("/actualizar/contribuyente/{id}")
 	public Contribuyente actualizarContribuyente(Contribuyente contribuyente){
 		return contribuyenteService.guardarContribuyente(contribuyente);  
 	};
 	
-	@DeleteMapping("/borrar/contribuyente/{id}")
+	@DeleteMapping("/eliminar/contribuyente/{id}")
 	public  void eliminarContribuyente(@PathVariable("id")Long id ) {
 		 this.contribuyenteService.eliminarContribuyente(id);
 	}

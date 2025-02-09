@@ -1,3 +1,1 @@
-web:Java
--Dspring.profiles.active=default
-Dserver.port=$PORT -jar tarjet/*.war
+web: java -Dspring.profiles.active=default  -Dserver.port=$PORT -jar tarjet/*.war

@@ -71,7 +71,7 @@ public class ContribuyenteRestController {
 	};
 	
 	@PutMapping("/actualizar/contribuyente/{id}")
-	public ResponseEntity<?> actualizarContribuyente(@RequestBody Contribuyente contribuyente,@PathVariable Long id ){
+	public ResponseEntity<?> actualizarContribuyente(@Valid @RequestBody Contribuyente contribuyente,@PathVariable Long id ){
 		Map<String,Object> response =  new  HashMap<String,Object>();
 		Contribuyente contribuyenteActualizado = null;
 		
@@ -98,6 +98,11 @@ public class ContribuyenteRestController {
         	response.put("error",e.getMessage().concat(":").concat(e.getMostSpecificCause().getMessage()));
         	return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
+	    catch (Exception e) {
+	        response.put("mensaje", "Error inesperado");
+	        response.put("error", e.getMessage());
+	        return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }    
 	    response.put("mensaje","El contribuyente  Id  : (".concat(id.toString()).concat(") Fue Actualizado  con exito "));
 	    response.put("contribuyente",contribuyenteActualizado);
 		return new ResponseEntity<Map<String,Object>> (response,HttpStatus.ACCEPTED);  

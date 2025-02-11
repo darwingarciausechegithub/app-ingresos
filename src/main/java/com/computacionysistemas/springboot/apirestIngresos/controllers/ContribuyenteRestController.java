@@ -82,9 +82,16 @@ public class ContribuyenteRestController {
 	    	return new  ResponseEntity<Map<String,Object>> (response, HttpStatus.NOT_FOUND);  
 	    }
 	    try {
+	    	contribuyenteForUpdated.setCedula(contribuyente.getCedula());
 	    	contribuyenteForUpdated.setNombre(contribuyente.getNombre());
 	    	contribuyenteForUpdated.setApellido(contribuyente.getApellido());
 	    	contribuyenteForUpdated.setEmail(contribuyente.getEmail());
+	    	contribuyenteForUpdated.setCalle(contribuyente.getCalle());
+	    	contribuyenteForUpdated.setCasa(contribuyente.getCasa());
+	    	contribuyenteForUpdated.setEdificio(contribuyente.getEdificio());
+	    	contribuyenteForUpdated.setPiso(contribuyente.getPiso());
+	    	contribuyenteForUpdated.setApto(contribuyente.getApto());
+	    	contribuyenteForUpdated.setCedula(contribuyente.getCedula());
 	    	contribuyenteActualizado=contribuyenteService.guardarContribuyente(contribuyenteForUpdated);
 	    }catch(DataAccessException e) {
 	    	response.put("mensaje","  Error  al  Actualizar el Ccontribuyente en la Base  de  Datos ");

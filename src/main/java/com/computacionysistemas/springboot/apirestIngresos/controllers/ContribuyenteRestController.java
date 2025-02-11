@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.computacionysistemas.springboot.apirestIngresos.models.entity.Contribuyente;
 import com.computacionysistemas.springboot.apirestIngresos.models.services.IContribuyenteService;
+
+
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -69,17 +71,62 @@ public class ContribuyenteRestController {
 	};
 	
 	@PutMapping("/actualizar/contribuyente/{id}")
-	public Contribuyente actualizarContribuyente(Contribuyente contribuyente){
-		return contribuyenteService.guardarContribuyente(contribuyente);  
+	public ResponseEntity<?> actualizarContribuyente(@RequestBody Contribuyente contribuyente,@PathVariable Long id ){
+		Map<String,Object> response =  new  HashMap<String,Object>();
+		Contribuyente contribuyenteActualizado = null;
+		
+	    Contribuyente contribuyenteForUpdated = contribuyenteService.buscarPorId(id);
+	    if (contribuyenteForUpdated==null)
+	    {
+	    	response.put("mensaje", "Contribuyente ".concat(id.toString()).concat("no existe en la Base  de datos ") );
+	    	return new  ResponseEntity<Map<String,Object>> (response, HttpStatus.NOT_FOUND);  
+	    }
+	    try {
+	    	contribuyenteForUpdated.setNombre(contribuyente.getNombre());
+	    	contribuyenteForUpdated.setApellido(contribuyente.getApellido());
+	    	contribuyenteForUpdated.setEmail(contribuyente.getEmail());
+	    	contribuyenteActualizado=contribuyenteService.guardarContribuyente(contribuyenteForUpdated);
+	    }catch(DataAccessException e) {
+	    	response.put("mensaje","  Error  al  Actualizar el Ccontribuyente en la Base  de  Datos ");
+        	response.put("error",e.getMessage().concat(":").concat(e.getMostSpecificCause().getMessage()));
+        	return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	    response.put("mensaje","El contribuyente  Id  : (".concat(id.toString()).concat(") Fue Actualizado  con exito "));
+	    response.put("contribuyente",contribuyenteActualizado);
+		return new ResponseEntity<Map<String,Object>> (response,HttpStatus.ACCEPTED);  
 	};
 	
-	@DeleteMapping("/eliminar/contribuyente/{id}")
-	public  void eliminarContribuyente(@PathVariable("id")Long id ) {
-		 this.contribuyenteService.eliminarContribuyente(id);
+	
+	
+	@DeleteMapping("/eliminar/clientes/{id}")
+	public  ResponseEntity<?> delete(@PathVariable Long id ) {
+	
+		Map<String,Object> response =  new  HashMap<String,Object>();
+		Contribuyente contribuyenteForDelete = contribuyenteService.buscarPorId(id);
+	    if (contribuyenteForDelete==null)
+	    {
+	     response.put("mensaje", "Contribuyente ".concat(id.toString()).concat(" Contribuyente no existe en la Base  de datos ") );
+	     return new  ResponseEntity<Map<String,Object>> (response, HttpStatus.NOT_FOUND);  
+	    }
+	    
+		try {
+			contribuyenteService.eliminarContribuyente(id);	
+		}catch(DataAccessException e ){
+	    	response.put("mensaje","  Error  al  Eliminar el Cliente en la Base  de  Datos ");
+        	response.put("error",e.getMessage().concat(":").concat(e.getMostSpecificCause().getMessage()));
+        	return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		response.put("mensaje","   Cliente Ha  sido  Eliminado  con Exito !!!  ");
+		return  new ResponseEntity<Map<String,Object>> (response,HttpStatus.ACCEPTED); 
 	}
 	
+	
+}
+
+
 	
 	
 	
 
-}
+

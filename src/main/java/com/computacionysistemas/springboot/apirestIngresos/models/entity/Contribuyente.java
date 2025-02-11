@@ -32,7 +32,7 @@ public class Contribuyente implements Serializable {
 	private Long  idContribuyente;
 	@Column(unique=true)
 	@NotBlank(message=" no puede estar vacia ")
-	@Size(min=4 , max=8 , message="El numero de tener al menos 4 digitos ")
+	@Size(min=4 , max=9 , message="El numero de tener al menos 4 digitos ")
 	private String cedula;
 	@NotBlank(message=" no puede estar vacio ")
 	private String nombre;

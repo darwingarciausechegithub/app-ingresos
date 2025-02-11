@@ -98,7 +98,7 @@ public class ContribuyenteRestController {
 	
 	
 	
-	@DeleteMapping("/eliminar/clientes/{id}")
+	@DeleteMapping("/eliminar/contribuyente/{id}")
 	public  ResponseEntity<?> delete(@PathVariable Long id ) {
 	
 		Map<String,Object> response =  new  HashMap<String,Object>();
@@ -117,7 +117,7 @@ public class ContribuyenteRestController {
         	return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		response.put("mensaje","   Cliente Ha  sido  Eliminado  con Exito !!!  ");
+		response.put("mensaje","   Contribuyente Ha  sido  Eliminado  con Exito !!!  ");
 		return  new ResponseEntity<Map<String,Object>> (response,HttpStatus.ACCEPTED); 
 	}
 	

@@ -38,7 +38,7 @@ public class ContribuyenteRestController {
 	@GetMapping("/listar/contribuyentes")
 	public List<Contribuyente> listadoContribuyentes(){
 		return contribuyenteService.findAll();
-	}
+	};
 	
 	
 	
@@ -144,7 +144,7 @@ public class ContribuyenteRestController {
 		
 		response.put("mensaje","   Contribuyente Ha  sido  Eliminado  con Exito !!!  ");
 		return  new ResponseEntity<Map<String,Object>> (response,HttpStatus.ACCEPTED); 
-	}
+	};
 
 }
 

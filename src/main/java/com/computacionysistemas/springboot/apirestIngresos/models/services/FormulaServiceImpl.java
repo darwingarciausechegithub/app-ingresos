@@ -2,11 +2,11 @@ package com.computacionysistemas.springboot.apirestIngresos.models.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 
 import com.computacionysistemas.springboot.apirestIngresos.models.dao.IFormulaDao;
 import com.computacionysistemas.springboot.apirestIngresos.models.entity.Formula;
-
+@Service
 public class FormulaServiceImpl implements IFormulaService{
 	@Autowired
 	IFormulaDao  formulaDao;

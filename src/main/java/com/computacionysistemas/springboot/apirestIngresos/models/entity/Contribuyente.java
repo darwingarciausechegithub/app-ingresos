@@ -31,8 +31,8 @@ public class Contribuyente implements Serializable {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long  idContribuyente;
 	@Column(unique=true)
-	@NotBlank(message=" no puede estar vacia ")
-	@Size(min=4 , max=9 , message="El numero de tener al menos 4 digitos ")
+	@NotBlank(message=" No puede estar vacia ")
+	@Size(min=5 , max=9 , message="El numero de tener al menos 4 digitos ")
 	private String cedula;
 	@NotBlank(message=" no puede estar vacio ")
 	private String nombre;
@@ -48,7 +48,7 @@ public class Contribuyente implements Serializable {
 	private String email;
 	
 	@NotBlank
-	@Size(min=30, max=200, message = "debe  tener como minimo 20 y como maximo 200 caracteres")
+	@Size(min=20, max=200, message = "debe  tener como minimo 20 y como maximo 200 caracteres")
 	private String calle;
 	
 	private String casa;
@@ -56,7 +56,7 @@ public class Contribuyente implements Serializable {
 	private String edificio;
 	@Size(max=8)
 	private String piso;
-	@Size(max=4)
+	@Size(max=8)
 	private String apto; 
 	
  	   

@@ -66,11 +66,5 @@ public class ContribuyenteServiceImpl  implements IContribuyenteService {
 		return (List<Contribuyente>) contribuyenteDao.findAll();
 	}
 
-	//@Override
-	//public Contribuyente buscarPorEmail(String email) {
 	
-	//	return  
-	//}
-
-
 }

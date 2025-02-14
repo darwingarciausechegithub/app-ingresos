@@ -16,6 +16,4 @@ public interface IContribuyenteService {
 	   public Contribuyente buscarPorId(Long id );
 	   public Contribuyente buscarPorEmail(String email);
 	   public List<Contribuyente> findAll();
-	    
-	   
 }

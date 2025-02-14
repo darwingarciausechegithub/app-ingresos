@@ -71,11 +71,25 @@ public class ContribuyenteRestController {
 	};
 	
 	@PutMapping("/actualizar/contribuyente/{id}")
-	public ResponseEntity<?> actualizarContribuyente(@Valid @RequestBody Contribuyente contribuyente,@PathVariable Long id ){
+	public ResponseEntity<?> actualizarContribuyente(@Valid @RequestBody Contribuyente contribuyente,@PathVariable Long id , BindingResult resultadosDeValidacion ){
+		
 		Map<String,Object> response =  new  HashMap<String,Object>();
+		
+		if (resultadosDeValidacion.hasErrors())
+		{
+		List<String>  resultadosValidacion = 
+        resultadosDeValidacion.getFieldErrors()
+        			.stream()
+        			.map(e ->{return "El campo '"+e.getField()+"'  "+e.getDefaultMessage();}
+        			   ).collect(Collectors.toList());
+            response.put("error", resultadosValidacion); 	
+            return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
+		}
+		
 		Contribuyente contribuyenteActualizado = null;
 		
 	    Contribuyente contribuyenteForUpdated = contribuyenteService.buscarPorId(id);
+	    
 	    if (contribuyenteForUpdated==null)
 	    {
 	    	response.put("mensaje", "Contribuyente ".concat(id.toString()).concat("no existe en la Base  de datos ") );
@@ -91,7 +105,6 @@ public class ContribuyenteRestController {
 	    	contribuyenteForUpdated.setEdificio(contribuyente.getEdificio());
 	    	contribuyenteForUpdated.setPiso(contribuyente.getPiso());
 	    	contribuyenteForUpdated.setApto(contribuyente.getApto());
-	    	contribuyenteForUpdated.setCedula(contribuyente.getCedula());
 	    	contribuyenteActualizado=contribuyenteService.guardarContribuyente(contribuyenteForUpdated);
 	    }catch(DataAccessException e) {
 	    	response.put("mensaje","  Error  al  Actualizar el Ccontribuyente en la Base  de  Datos ");
@@ -100,7 +113,7 @@ public class ContribuyenteRestController {
 	    }
 	    catch (Exception e) {
 	        response.put("mensaje", "Error inesperado");
-	        response.put("error", e.getMessage());
+	        response.put("error", e.getCause().getMessage());
 	        return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }    
 	    response.put("mensaje","El contribuyente  Id  : (".concat(id.toString()).concat(") Fue Actualizado  con exito "));
@@ -132,8 +145,7 @@ public class ContribuyenteRestController {
 		response.put("mensaje","   Contribuyente Ha  sido  Eliminado  con Exito !!!  ");
 		return  new ResponseEntity<Map<String,Object>> (response,HttpStatus.ACCEPTED); 
 	}
-	
-	
+
 }
 
 
